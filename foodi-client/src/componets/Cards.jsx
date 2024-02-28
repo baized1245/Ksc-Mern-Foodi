@@ -1,17 +1,17 @@
-import React, { useContext, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { FaHeart } from 'react-icons/fa'
-import { AuthContext } from '../context/AuthProvider'
-import Swal from 'sweetalert2'
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
+import { AuthContext } from "../context/AuthProvider";
+import Swal from "sweetalert2";
 
 const Cards = ({ item }) => {
-  const { name, image, price, recipe, _id } = item
-  const [isHeartFillted, setIsHeartFillted] = useState(false)
-  const { user } = useContext(AuthContext)
+  const { name, image, price, recipe, _id } = item;
+  const [isHeartFillted, setIsHeartFillted] = useState(false);
+  const { user } = useContext(AuthContext);
 
   // redirecting to home or specific page
-  const location = useLocation()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // add to cart btn
   const handleAddToCart = (item) => {
@@ -23,11 +23,11 @@ const Cards = ({ item }) => {
         image,
         price,
         email: user.email,
-      }
-      fetch('https://ksc-mern-foodi.vercel.app/carts', {
-        method: 'POST',
+      };
+      fetch("https://foodi-server-mdbaizedhasans.vercel.app/carts", {
+        method: "POST",
         headers: {
-          'content-type': 'application/json',
+          "content-type": "application/json",
         },
         body: JSON.stringify(cartItem),
       })
@@ -35,46 +35,48 @@ const Cards = ({ item }) => {
         .then((data) => {
           if (data.insertedId) {
             Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Item Saved in the Cart!',
+              position: "center",
+              icon: "success",
+              title: "Item Saved in the Cart!",
               showConfirmButton: false,
               timer: 1500,
-            })
+            });
           }
-        })
+        });
     } else {
       Swal.fire({
-        title: 'Please Login',
+        title: "Please Login",
         text: "Without an account can't able to add products",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Signup Now',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Signup Now",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/signup', { state: { from: location } })
+          navigate("/signup", { state: { from: location } });
         }
-      })
+      });
     }
-  }
+  };
 
   const handleHeartFillted = () => {
-    setIsHeartFillted(!isHeartFillted)
-  }
+    setIsHeartFillted(!isHeartFillted);
+  };
 
   return (
     <div className="card w-96 bg-base-100 shadow-xl relative">
       <div
         className={`rating gap-1 absolute right-2 top-2 p-4 heartStar bg-green ${
-          isHeartFillted ? 'text-rose-500' : 'text-white'
+          isHeartFillted ? "text-rose-500" : "text-white"
         }`}
         onClick={handleHeartFillted}
       >
         <FaHeart className="h-5 w-5 cursor-pointer" />
       </div>
-      <Link to={`https://ksc-mern-foodi.vercel.app/menu/${item._id}`}>
+      <Link
+        to={`https://foodi-server-mdbaizedhasans.vercel.app/menu/${item._id}`}
+      >
         <figure>
           <img
             src={item.image}
@@ -84,7 +86,9 @@ const Cards = ({ item }) => {
         </figure>
       </Link>
       <div className="card-body">
-        <Link to={`https://ksc-mern-foodi.vercel.app/menu/${item._id}`}>
+        <Link
+          to={`https://foodi-server-mdbaizedhasans.vercel.app/menu/${item._id}`}
+        >
           <h2 className="card-title">{item.name}</h2>
         </Link>
         <p>Description of the item</p>
@@ -101,7 +105,7 @@ const Cards = ({ item }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Cards
+export default Cards;

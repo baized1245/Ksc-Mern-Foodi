@@ -1,49 +1,49 @@
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import React, { useEffect, useState } from 'react'
-import Slider from 'react-slick'
-import Cards from '../../componets/Cards'
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
+import Cards from "../../componets/Cards";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const simpleNextArrow = (props) => {
-  const { className, style, onClick } = props
+  const { className, style, onClick } = props;
   return (
     <div
       className={className}
-      style={{ ...style, display: 'block', background: 'red' }}
+      style={{ ...style, display: "block", background: "red" }}
       onClick={onClick}
     >
       Next
     </div>
-  )
-}
+  );
+};
 
 const simplePrevArrow = (props) => {
-  const { className, style, onClick } = props
+  const { className, style, onClick } = props;
   return (
     <div
       className={className}
-      style={{ ...style, display: 'block', background: 'green' }}
+      style={{ ...style, display: "block", background: "green" }}
       onClick={onClick}
     >
       BACK
     </div>
-  )
-}
+  );
+};
 
 const SpecialDishes = () => {
-  const [recipes, setRecipes] = useState([])
-  const slider = React.useRef(null)
+  const [recipes, setRecipes] = useState([]);
+  const slider = React.useRef(null);
 
   useEffect(() => {
-    fetch('https://ksc-mern-foodi.vercel.app/menu.json')
+    fetch("https://foodi-server-mdbaizedhasans.vercel.app/menu")
       .then((res) => res.json())
       .then((data) => {
-        const specials = data.filter((item) => item.category === 'popular')
-        setRecipes(specials)
+        const specials = data.filter((item) => item.category === "popular");
+        setRecipes(specials);
         // console.log(recipes);
-      })
-  }, [])
+      });
+  }, []);
 
   // settings
   const settings = {
@@ -82,7 +82,7 @@ const SpecialDishes = () => {
 
     nextArrow: <simpleNextArrow />,
     PrevArrow: <simplePrevArrow />,
-  }
+  };
 
   return (
     <div className="section-container my-20 relative">
@@ -115,7 +115,7 @@ const SpecialDishes = () => {
         ))}
       </Slider>
     </div>
-  )
-}
+  );
+};
 
-export default SpecialDishes
+export default SpecialDishes;

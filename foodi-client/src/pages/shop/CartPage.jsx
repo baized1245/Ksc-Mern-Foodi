@@ -1,26 +1,26 @@
-import React, { useContext, useState } from 'react'
-import useCarts from '../../hooks/useCarts'
-import { FaTrash } from 'react-icons/fa'
-import Swal from 'sweetalert2'
-import { AuthContext } from '../../context/AuthProvider'
+import React, { useContext, useState } from "react";
+import useCarts from "../../hooks/useCarts";
+import { FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../context/AuthProvider";
 
 const CartPage = () => {
-  const [cart, refetch] = useCarts()
-  const { user } = useContext(AuthContext)
-  const [cartItems, setCartItem] = useState([])
+  const [cart, refetch] = useCarts();
+  const { user } = useContext(AuthContext);
+  const [cartItems, setCartItem] = useState([]);
 
   // calculate price
   const calculatePrice = (item) => {
-    return item.price * item.quantity
-  }
+    return item.price * item.quantity;
+  };
 
   // handleIncress function
   const handleIncress = (item) => {
     // console.log(item)
-    fetch(`https://ksc-mern-foodi.vercel.app/carts/${item._id}`, {
-      method: 'PUT',
+    fetch(`https://foodi-server-mdbaizedhasans.vercel.app/carts/${item._id}`, {
+      method: "PUT",
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
       body: JSON.stringify({ quantity: item.quantity + 1 }),
     })
@@ -31,25 +31,28 @@ const CartPage = () => {
             return {
               ...cartItem,
               quantity: cartItem.quantity + 1,
-            }
+            };
           }
-          return cartItem
-        })
-        refetch()
-        setCartItem(updatedCart)
-      })
-  }
+          return cartItem;
+        });
+        refetch();
+        setCartItem(updatedCart);
+      });
+  };
 
   // handleDecress function
   const handleDecress = (item) => {
     if (item.quantity > 1) {
-      fetch(`https://ksc-mern-foodi.vercel.app/carts/${item._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({ quantity: item.quantity - 1 }),
-      })
+      fetch(
+        `https://foodi-server-mdbaizedhasans.vercel.app/carts/${item._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ quantity: item.quantity - 1 }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           const updatedCart = cartItems.map((cartItem) => {
@@ -57,53 +60,56 @@ const CartPage = () => {
               return {
                 ...cartItem,
                 quantity: cartItem.quantity - 1,
-              }
+              };
             }
-            return cartItem
-          })
-          refetch()
-          setCartItem(updatedCart)
-        })
+            return cartItem;
+          });
+          refetch();
+          setCartItem(updatedCart);
+        });
     } else {
-      alert("Item can't be zero")
+      alert("Item can't be zero");
     }
-  }
+  };
 
   // calculate total price
   const cartSubTotal = cart.reduce((total, item) => {
-    return total + calculatePrice(item)
-  }, 0)
-  const orderTotal = cartSubTotal
+    return total + calculatePrice(item);
+  }, 0);
+  const orderTotal = cartSubTotal;
 
   // handle delete btn
   const handleDelete = (item) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'You want to delete this item?',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "You want to delete this item?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://ksc-mern-foodi.vercel.app/carts/${item._id}`, {
-          method: 'DELETE',
-        })
+        fetch(
+          `https://foodi-server-mdbaizedhasans.vercel.app/carts/${item._id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount > 0) {
-              refetch()
+              refetch();
               Swal.fire({
-                title: 'Deleted!',
-                text: 'Item has been deleted.',
-                icon: 'success',
-              })
+                title: "Deleted!",
+                text: "Item has been deleted.",
+                icon: "success",
+              });
             }
-          })
+          });
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className="section-container">
@@ -201,7 +207,7 @@ const CartPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CartPage
+export default CartPage;

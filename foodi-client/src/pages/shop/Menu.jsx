@@ -1,85 +1,87 @@
-import React, { useEffect, useState } from 'react'
-import Cards from '../../componets/Cards'
-import { FaFilter } from 'react-icons/fa'
+import React, { useEffect, useState } from "react";
+import Cards from "../../componets/Cards";
+import { FaFilter } from "react-icons/fa";
 
 const Menu = () => {
-  const [menu, setMenu] = useState([])
-  const [filteredItems, setFilteredItems] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState('all')
-  const [sortOption, setSortOption] = useState('default')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemtsPerPage] = useState(6)
+  const [menu, setMenu] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortOption, setSortOption] = useState("default");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemtsPerPage] = useState(6);
 
   // loading
   useEffect(() => {
     // fetch data from the backend
     const fetchData = async () => {
       try {
-        const response = await fetch('https://ksc-mern-foodi.vercel.app/menu')
-        const data = await response.json()
+        const response = await fetch(
+          "https://foodi-server-mdbaizedhasans.vercel.app/menu"
+        );
+        const data = await response.json();
         // console.log(data);
-        setMenu(data)
-        setFilteredItems(data)
+        setMenu(data);
+        setFilteredItems(data);
       } catch (error) {
-        console.log('Error fetching data', error)
+        console.log("Error fetching data", error);
       }
-    }
+    };
     // call the function
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   // filtering data based on category
   const filterItems = (category) => {
     const filtered =
-      category === 'all'
+      category === "all"
         ? menu
-        : menu.filter((item) => item.category === category)
-    setFilteredItems(filtered)
-    setSelectedCategory(category)
-    setCurrentPage(1)
-  }
+        : menu.filter((item) => item.category === category);
+    setFilteredItems(filtered);
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
 
   // show all data function
   const showall = () => {
-    setFilteredItems(menu)
-    setSelectedCategory('all')
-    setCurrentPage(1)
-  }
+    setFilteredItems(menu);
+    setSelectedCategory("all");
+    setCurrentPage(1);
+  };
 
   // sorting based on A-Z, Z-A, Low-High and pricing
   const handleSortChange = (option) => {
-    setSortOption(option)
+    setSortOption(option);
 
-    let sortedItems = [...filteredItems]
+    let sortedItems = [...filteredItems];
 
     // logic
     switch (option) {
-      case 'A-Z':
-        sortedItems.sort((a, b) => a.name.localeCompare(b.name))
-        break
-      case 'Z-A':
-        sortedItems.sort((a, b) => b.name.localeCompare(a.name))
-        break
-      case 'low-to-high':
-        sortedItems.sort((a, b) => a.price - b.price)
-        break
-      case 'high-to-low':
-        sortedItems.sort((a, b) => b.price - a.price)
-        break
+      case "A-Z":
+        sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "Z-A":
+        sortedItems.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case "low-to-high":
+        sortedItems.sort((a, b) => a.price - b.price);
+        break;
+      case "high-to-low":
+        sortedItems.sort((a, b) => b.price - a.price);
+        break;
       default:
         // code block
-        break
+        break;
     }
 
-    setFilteredItems(sortedItems)
-    setCurrentPage(1)
-  }
+    setFilteredItems(sortedItems);
+    setCurrentPage(1);
+  };
 
   // pagination logic
-  const indexOfLastItem = currentPage * itemtsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemtsPerPage
-  const currentItem = filteredItems.slice(indexOfFirstItem, indexOfLastItem)
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  const indexOfLastItem = currentPage * itemtsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemtsPerPage;
+  const currentItem = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="">
@@ -111,43 +113,43 @@ const Menu = () => {
           <div className="my-5 flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap">
             <button
               onClick={showall}
-              className={selectedCategory === 'all' ? 'active' : ''}
+              className={selectedCategory === "all" ? "active" : ""}
             >
               All
             </button>
             <button
-              onClick={() => filterItems('popular')}
-              className={selectedCategory === 'popular' ? 'active' : ''}
+              onClick={() => filterItems("popular")}
+              className={selectedCategory === "popular" ? "active" : ""}
             >
               Popular
             </button>
             <button
-              onClick={() => filterItems('salad')}
-              className={selectedCategory === 'salad' ? 'active' : ''}
+              onClick={() => filterItems("salad")}
+              className={selectedCategory === "salad" ? "active" : ""}
             >
               Salad
             </button>
             <button
-              onClick={() => filterItems('pizza')}
-              className={selectedCategory === 'pizza' ? 'active' : ''}
+              onClick={() => filterItems("pizza")}
+              className={selectedCategory === "pizza" ? "active" : ""}
             >
               Pizza
             </button>
             <button
-              onClick={() => filterItems('soup')}
-              className={selectedCategory === 'soup' ? 'active' : ''}
+              onClick={() => filterItems("soup")}
+              className={selectedCategory === "soup" ? "active" : ""}
             >
               Soups
             </button>
             <button
-              onClick={() => filterItems('dessert')}
-              className={selectedCategory === 'dessert' ? 'active' : ''}
+              onClick={() => filterItems("dessert")}
+              className={selectedCategory === "dessert" ? "active" : ""}
             >
               Desserts
             </button>
             <button
-              onClick={() => filterItems('drinks')}
-              className={selectedCategory === 'drinks' ? 'active' : ''}
+              onClick={() => filterItems("drinks")}
+              className={selectedCategory === "drinks" ? "active" : ""}
             >
               Drinks
             </button>
@@ -192,7 +194,7 @@ const Menu = () => {
             key={index + 1}
             onClick={() => paginate(index + 1)}
             className={`mx-2 px-3 py-1 rounded-full ${
-              currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200'
+              currentPage === index + 1 ? "bg-green text-white" : "bg-gray-200"
             }`}
           >
             {index + 1}
@@ -200,7 +202,7 @@ const Menu = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

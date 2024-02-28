@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const Banner = () => {
   return (
@@ -7,11 +7,11 @@ const Banner = () => {
         {/* Imgae */}
 
         <div className="md:-1/2">
-          <img src="/public/images/home/banner.png" alt="" />
+          <img src="/images/home/banner.png" alt="" />
           <div className="flex flex-col md:flex-row items-center justify-around -mt-14 gap-4">
             <div className="flex bg-white py-2 px-3 rounded-lg items-center gap-3 shadow-md w-64">
               <img
-                src="/public/images/home/b-food1.png"
+                src="/images/home/b-food1.png"
                 alt=""
                 className="rounded-2xl"
               />
@@ -54,7 +54,7 @@ const Banner = () => {
             </div>
             <div className="sm:flex hidden bg-white py-2 px-3 rounded-lg items-center gap-3 shadow-md w-64">
               <img
-                src="/public/images/home/b-food1.png"
+                src="/images/home/b-food1.png"
                 alt=""
                 className="rounded-2xl"
               />
@@ -100,7 +100,7 @@ const Banner = () => {
         {/* Text */}
         <div className="md:-1/2 space-y-7 px-4">
           <h2 className="md:text-5xl text-4xl font-bold md:leading-snug leading-snug">
-            Dive into Delights of Delectable{' '}
+            Dive into Delights of Delectable{" "}
             <span className="text-green">Food</span>
           </h2>
           <p className="text-xl text-[#4A4A4A]">
@@ -113,7 +113,7 @@ const Banner = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;
